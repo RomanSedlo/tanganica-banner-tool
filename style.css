@@ -1,0 +1,73 @@
+:root {
+  --primary: darkblue;
+  --secondary: aliceblue;
+}
+
+body {
+  text-align: center;
+  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding: 1em 4em;
+  background: linear-gradient(19deg, #e3effa 25%, transparent 26%, transparent 74%, #e3effa 75%);
+  background-size: 6em 6em;
+  background-color: #ffffff;
+}
+
+
+select,
+input,
+button {
+  padding: .5em;
+  border-radius: 3px;
+  background-color: var(--secondary);
+  font-size: 18px;
+  border: groove var(--primary) 2px;
+}
+
+button:hover {
+  background-color: aquamarine;
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: black;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+form div {
+  display: grid;
+  grid-template-columns: 120px 2fr 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.main_input {
+  width: 24em;
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid grey;
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+  margin: 0 1.9em;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner.active {
+  display: inline-block;
+}

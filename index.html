@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Creative Production</title>
+    <link rel="shortcut icon" href="images/tanganica_symbol-new.svg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>Tanganica</nav>
+    <h1>Marketing Creative Automation Tool</h1>
+    <form action="n8n..." method="POST">
+        <div>
+            <label for="function">Campaign type</label>
+            <select name="function" id="function" class="main_input">
+                <option value="ads">Ads</option>
+                <option value="statistics">Statistics</option>
+                <option value="diagnostics">Diagnostics</option>
+                <option value="artificial_intelligence">Artificial Intelligence</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="header_text">Headline</label>
+            <input type="text" id="header_text" name="header_text" placeholder="Enhance your product photos with AI" class="main_input">
+            <button type="button" id="btn-headline">
+                <span class="btn-text">✨ Generate</span>
+                <span class="spinner" id="spinner-headline"></span>
+            </button>
+        </div>
+
+        <div>
+            <label for="button_text">Button text</label>
+            <input type="text" id="button_text" name="button_text" placeholder="Try for free" class="main_input">
+            <button type="button" id="btn-button">
+                <span class="btn-text">✨ Generate</span>
+                <span class="spinner" id="spinner-button"></span>
+            </button>
+        </div>
+
+        <div>
+            <label for="submit"></label>
+            <button type="submit"title="Fill in all fields to continue">
+                Generate banners
+            </button>
+        </div>
+
+    </form>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
