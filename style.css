@@ -12,6 +12,10 @@ body {
   background-color: #ffffff;
 }
 
+nav img {
+  height: 16px;
+  width: auto;
+}
 
 select,
 input,

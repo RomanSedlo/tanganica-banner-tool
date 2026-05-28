@@ -19,7 +19,7 @@ checkForm();
 btnGenerate.addEventListener("click", async () => {
   spinner.classList.add("active");
   btnGenerate.querySelector(".btn-text").style.display = "none";
-  
+
   try {
     const res = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
@@ -28,6 +28,8 @@ btnGenerate.addEventListener("click", async () => {
         action: "generate_text",
         field: "headline",
         campaign: document.getElementById("function").value,
+        currentHeadline: document.getElementById("header_text").value.trim(),
+        currentCTA: document.getElementById("button_text").value.trim(),
       }),
     });
 
@@ -46,7 +48,7 @@ btnGenerate.addEventListener("click", async () => {
 btnButton.addEventListener("click", async () => {
   spinnerButton.classList.add("active");
   btnButton.querySelector(".btn-text").style.display = "none";
-  
+
   try {
     const res = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
@@ -55,6 +57,8 @@ btnButton.addEventListener("click", async () => {
         action: "generate_text",
         field: "button_text",
         campaign: document.getElementById("function").value,
+        currentHeadline: document.getElementById("header_text").value.trim(),
+        currentCTA: document.getElementById("button_text").value.trim(),
       }),
     });
 

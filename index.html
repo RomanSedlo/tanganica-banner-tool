@@ -10,22 +10,50 @@
 </head>
 
 <body>
-    <nav>Tanganica</nav>
+    <nav><img src="./images/tanganica_logo_new.svg" alt="Tanganica logo"></nav>
     <h1>Marketing Creative Automation Tool</h1>
     <form action="n8n..." method="POST">
         <div>
             <label for="function">Campaign type</label>
             <select name="function" id="function" class="main_input">
-                <option value="ads">Ads</option>
-                <option value="statistics">Statistics</option>
-                <option value="diagnostics">Diagnostics</option>
-                <option value="artificial_intelligence">Artificial Intelligence</option>
+                <optgroup label="Ads">
+                    <option value="google_ads">Google Ads Automation</option>
+                    <option value="facebook_ads">Facebook & Meta Ads Automation</option>
+                    <option value="bing_ads">Bing Ads Automation</option>
+                    <option value="ai_campaign_creation">AI Campaign Creation</option>
+                    <option value="budget_splitting">Automatic Budget Splitting</option>
+                    <option value="ai_product_attributes">AI Product Attributes</option>
+                </optgroup>
+                <optgroup label="Diagnostics">
+                    <option value="conversion_funnel">Conversion Funnel Analysis</option>
+                    <option value="performance_benchmarks">Performance Benchmarks</option>
+                    <option value="seo_analysis">SEO Analysis</option>
+                    <option value="competitor_analysis">Competitor Analysis</option>
+                    <option value="product_conversion_rate">Product Conversion Rate</option>
+                    <option value="website_monitoring">Website Monitoring</option>
+                </optgroup>
+                <optgroup label="Statistics">
+                    <option value="campaign_performance">Campaign Performance</option>
+                    <option value="order_sources">Order Sources Attribution</option>
+                    <option value="traffic_analysis">Traffic Analysis</option>
+                    <option value="product_performance">Product Performance</option>
+                    <option value="category_performance">Category Performance</option>
+                </optgroup>
+                <optgroup label="AI Tools">
+                    <option value="ai_product_videos">AI Product Videos</option>
+                    <option value="blog_content">AI Blog Content</option>
+                    <option value="social_media_content">AI Social Media Content</option>
+                    <option value="ad_creation">AI Ad Creation</option>
+                    <option value="ai_image_generation">AI Image Generation</option>
+                    <option value="newsletter_content">AI Newsletter Content</option>
+                </optgroup>
             </select>
         </div>
 
         <div>
             <label for="header_text">Headline</label>
-            <input type="text" id="header_text" name="header_text" placeholder="Enhance your product photos with AI" class="main_input">
+            <input type="text" id="header_text" name="header_text" placeholder="Enhance your product photos with AI"
+                class="main_input">
             <button type="button" id="btn-headline">
                 <span class="btn-text">✨ Generate</span>
                 <span class="spinner" id="spinner-headline"></span>
@@ -43,7 +71,7 @@
 
         <div>
             <label for="submit"></label>
-            <button type="submit"title="Fill in all fields to continue">
+            <button type="submit" title="Fill in all fields to continue">
                 Generate banners
             </button>
         </div>
