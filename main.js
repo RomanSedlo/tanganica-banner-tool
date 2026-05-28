@@ -17,6 +17,8 @@ requiredInputs.forEach(input => input.addEventListener("input", checkForm));
 checkForm();
 
 btnGenerate.addEventListener("click", async () => {
+  btnGenerate.disabled = true;
+  submitBtn.disabled = true;
   spinner.classList.add("active");
   btnGenerate.querySelector(".btn-text").style.display = "none";
 
@@ -42,10 +44,15 @@ btnGenerate.addEventListener("click", async () => {
   } finally {
     spinner.classList.remove("active");
     btnGenerate.querySelector(".btn-text").style.display = "inline";
+    checkForm();
+    btnGenerate.disabled = false;
+    submitBtn.disabled = false;
   }
 });
 
 btnButton.addEventListener("click", async () => {
+  btnButton.disabled = true;
+  submitBtn.disabled = true;
   spinnerButton.classList.add("active");
   btnButton.querySelector(".btn-text").style.display = "none";
 
@@ -71,6 +78,9 @@ btnButton.addEventListener("click", async () => {
   } finally {
     spinnerButton.classList.remove("active");
     btnButton.querySelector(".btn-text").style.display = "inline";
+    checkForm();
+    btnButton.disabled = false;
+    submitBtn.disabled = false;
   }
 });
 
