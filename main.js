@@ -1,4 +1,4 @@
-const N8N_WEBHOOK_URL = "https://tgnca.app.n8n.cloud/webhook/477ab8eb-7095-4c77-a53f-15a1a7e08626"
+const _WEBHOOK_URL = "https://creative-automation-tool.marketing-e01.workers.dev/"
 
 const btnGenerate = document.getElementById("btn-headline");
 const spinner = document.getElementById("spinner-headline");
@@ -21,7 +21,7 @@ btnGenerate.addEventListener("click", async () => {
   btnGenerate.querySelector(".btn-text").style.display = "none";
 
   try {
-    const res = await fetch(N8N_WEBHOOK_URL, {
+    const res = await fetch(_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -50,7 +50,7 @@ btnButton.addEventListener("click", async () => {
   btnButton.querySelector(".btn-text").style.display = "none";
 
   try {
-    const res = await fetch(N8N_WEBHOOK_URL, {
+    const res = await fetch(_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
