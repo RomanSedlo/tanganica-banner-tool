@@ -75,3 +75,10 @@ form div {
 .spinner.active {
   display: inline-block;
 }
+
+#notes {
+  margin-top: 4em;
+}
+p {
+  margin: 8px;
+}
