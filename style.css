@@ -1,6 +1,8 @@
 :root {
   --primary: darkblue;
   --secondary: aliceblue;
+  --accent: aquamarine;
+  --strong-primary: rgb(0, 0, 52);
 }
 
 body {
@@ -9,32 +11,12 @@ body {
   padding: 1em 4em;
   background: linear-gradient(19deg, #e3effa 25%, transparent 26%, transparent 74%, #e3effa 75%);
   background-size: 6em 6em;
-  background-color: #ffffff;
+  background-color: #fdfdfd;
 }
 
 nav img {
   height: 16px;
   width: auto;
-}
-
-select,
-input,
-button {
-  padding: .5em;
-  border-radius: 3px;
-  background-color: var(--secondary);
-  font-size: 18px;
-  border: groove var(--primary) 2px;
-}
-
-button:hover {
-  background-color: aquamarine;
-}
-
-button[type="submit"]:disabled, button[type="button"]:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  border-color: black;
 }
 
 form {
@@ -49,6 +31,32 @@ form div {
   grid-template-columns: 120px 2fr 1fr;
   align-items: center;
   gap: 8px;
+}
+
+
+select,
+input,
+button {
+  padding: .5em;
+  border-radius: 3px;
+  background-color: var(--secondary);
+  font-size: 18px;
+  border: groove var(--primary) 2px;
+}
+
+button:hover {
+  background-color: var(--accent);
+}
+
+button[type="submit"]:disabled, button[type="button"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: black;
+}
+
+label {
+  font-weight: 600;
+  color: var(--strong-primary)
 }
 
 .main_input {

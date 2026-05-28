@@ -29,6 +29,7 @@ btnGenerate.addEventListener("click", async () => {
       body: JSON.stringify({
         action: "generate_text",
         field: "headline",
+        type: document.getElementById("ad_type").value,
         campaign: document.getElementById("function").value,
         currentHeadline: document.getElementById("header_text").value.trim(),
         currentCTA: document.getElementById("button_text").value.trim(),
@@ -44,9 +45,9 @@ btnGenerate.addEventListener("click", async () => {
   } finally {
     spinner.classList.remove("active");
     btnGenerate.querySelector(".btn-text").style.display = "inline";
-    checkForm();
     btnGenerate.disabled = false;
     submitBtn.disabled = false;
+    checkForm();
   }
 });
 
@@ -63,6 +64,7 @@ btnButton.addEventListener("click", async () => {
       body: JSON.stringify({
         action: "generate_text",
         field: "button_text",
+        type: document.getElementById("ad_type").value,
         campaign: document.getElementById("function").value,
         currentHeadline: document.getElementById("header_text").value.trim(),
         currentCTA: document.getElementById("button_text").value.trim(),
@@ -78,9 +80,9 @@ btnButton.addEventListener("click", async () => {
   } finally {
     spinnerButton.classList.remove("active");
     btnButton.querySelector(".btn-text").style.display = "inline";
-    checkForm();
     btnButton.disabled = false;
     submitBtn.disabled = false;
+    checkForm();
   }
 });
 
