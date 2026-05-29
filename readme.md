@@ -4,7 +4,7 @@ Nástroj pro generování reklamních bannerů ve všech 11 evropských trzích 
 
 ## Jak používat
 
-1. Otevři formulář na GitHub Pages
+1. Otevři formulář na [GitHub Pages](https://romansedlo.github.io/tanganica-banner-tool/)
 2. Vyber **Ad type** a **Campaign type**
 3. Napiš nebo vygeneruj **Headline** a **Button text** (EN)
 4. Klikni **Generate banners**
