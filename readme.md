@@ -1,26 +1,19 @@
-# Marketing Creative Automation Tool
+# Tanganica Banner Automation Tool
 
-Internal tool for generating ad creatives for Tanganica's marketing campaigns across 11 European markets.
+Nástroj pro generování reklamních bannerů ve všech 11 evropských trzích Tanganicy.
 
-## Stack
+## Jak používat
 
--   **GitHub Pages** — frontend form
--   **Cloudflare Worker** — CORS proxy
--   **N8N** — workflow orchestration
--   **Gemini 3.5 Flash** — AI text generation
+1. Otevři formulář na GitHub Pages
+2. Vyber **Ad type** a **Campaign type**
+3. Napiš nebo vygeneruj **Headline** a **Button text** (EN)
+4. Klikni **Generate banners**
+5. Počkej — stáhne se ZIP s PNG bannery pro všech 11 jazyků
 
-## How to use
+## Co dostaneš
 
-1.  Select a campaign type
-2.  Write or AI-generate a headline and button text
-3.  Click **Generate banners**
+ZIP soubor s bannery.
 
-## Setup
+## Požadavky
 
--   N8N workflow: import `n8n/workflow.json`, add Gemini API key, activate
--   Cloudflare Worker: deploy `cloudflare/worker.js`, update `_WEBHOOK_URL` in `main.js`
-
-## Notes
-
--   We use Gemini free tier, which is the only limit ~10–15 requests/minute — if generation fails, wait 30s and retry
--   Banner generation is not yet implemented
+Žádná instalace — funguje přímo v prohlížeči.
