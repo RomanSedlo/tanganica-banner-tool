@@ -1,3 +1,17 @@
+@font-face {
+  font-family: Graphik;
+  src: url(https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f68ca1847539055dcba8_GraphikMedium.otf)format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap
+}
+@font-face {
+  font-family: Graphik;
+  src: url(https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f6ba07cac216635d0094_GraphikLight.otf)format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap
+}
 :root {
   --primary: darkblue;
   --secondary: aliceblue;
@@ -7,7 +21,7 @@
 
 body {
   text-align: center;
-  font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Graphik, sans-serif;
   padding: 1em 4em;
   background: linear-gradient(19deg, #e3effa 25%, transparent 26%, transparent 74%, #e3effa 75%);
   background-size: 6em 6em;
@@ -42,15 +56,25 @@ button {
   background-color: var(--secondary);
   font-size: 18px;
   border: groove var(--primary) 2px;
+  font-family: Graphik, sans-serif;
 }
 
 button:hover {
   background-color: var(--accent);
 }
-
+button[type="submit"] {
+  font-weight: 600;
+  min-width: 200px;
+  min-height: 50px;
+}
 button[type="submit"]:disabled, button[type="button"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  border-color: black;
+}
+button[type="submit"].loading {
+  opacity: 1;
+  cursor: progress;
   border-color: black;
 }
 
@@ -89,4 +113,33 @@ label {
 }
 p {
   margin: 8px;
+}
+
+.loader {
+    width: fit-content;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #00000000;
+    -webkit-text-stroke: 1px #000;
+    --g: conic-gradient(#000 0 0) no-repeat text;
+    background: var(--g) 0, var(--g) 1ch, var(--g) 2ch, var(--g) 3ch, var(--g) 4ch, var(--g) 5ch, var(--g) 6ch;
+    animation: l17-0 1s linear infinite alternate, l17-1 2s linear infinite;
+    display: none;
+}
+
+.loader.active {
+    display: inline-block;
+}
+.loader:before {
+    content: "Loading";
+}
+@keyframes l17-0 {
+    0%   { background-size: 1ch 0    }
+    100% { background-size: 1ch 100% }
+}
+@keyframes l17-1 {
+    0%,50%    { background-position-y: 100%, 0   }
+    50.01%,to { background-position-y: 0, 100%   }
 }

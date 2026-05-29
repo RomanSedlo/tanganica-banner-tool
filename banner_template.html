@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Banner template</title>
+  <style>
+    @font-face {
+      font-family: Graphik;
+      src: url(https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f68ca1847539055dcba8_GraphikMedium.otf)format("opentype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap
+    }
+    @font-face {
+      font-family: Graphik;
+      src: url(https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f6ba07cac216635d0094_GraphikLight.otf)format("opentype");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap
+    }
+
+    /* jen rozměry a vycentrování, no-design */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Graphik; }
+    .banner {
+      width: 1080px;
+      height: 1080px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      border: 1px solid #ccc;
+      padding: 2em;
+    }
+    .headline { font-size: 60px; text-align: center; }
+    .cta { font-size: 32px; border: 1px solid #000; padding: 16px 32px; }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <div class="headline">{{headline}}</div>
+    <div class="cta">{{cta_text}}</div>
+  </div>
+</body>
+
+</html>

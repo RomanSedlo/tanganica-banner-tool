@@ -81,7 +81,8 @@
         <div>
             <label for="submit"></label>
             <button type="submit" title="Fill in all fields to continue">
-                Generate banners
+                <span class="btn-text">Generate banners</span>
+                <div class="loader" id="banner-loader"></div>
             </button>
         </div>
 
@@ -90,10 +91,12 @@
     <div id="notes">
         <h2>Useful Information</h2>
         <p>AI generates based on all of your input — leave inputs empty to generate from scratch.</p>
-        <p>Button text is recommended to be 2 - 4 words max.</p>
+        <p>Button text is recommended to be 2 - 3 words.</p>
         <p>Sometimes the "Generate" button doesn't work, wait 1 min and retry.</p>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="main.js"></script>
 </body>
 
