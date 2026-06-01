@@ -50,15 +50,13 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
     await document.fonts.ready;
 
     const [w, h] = size.split("x").map(Number);
-    const canvas = await html2canvas(banner, {
+    const blob = await htmlToImage.toBlob(banner, {
       width: w,
       height: h,
-      scale: 1,
-      useCORS: true,
-      allowTaint: false,
+      pixelRatio: 1,
+      cacheBust: true,
     });
 
-    const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
     zip.file(`${ad_type}_[${campaign}]_banner-${lang}_${size}.png`, blob);
 
     document.body.removeChild(container);
