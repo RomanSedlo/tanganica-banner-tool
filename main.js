@@ -160,7 +160,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     } finally {
         bannerLoader.classList.remove("active");
         submitBtnText.style.display = "inline";
-        submitBtn.classList.remove("loading"); 
+        submitBtn.classList.remove("loading");
         checkForm();
     }
 });
