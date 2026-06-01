@@ -11,17 +11,32 @@ const requiredInputs = document.querySelectorAll("input[type='text']");
 const bannerLoader = document.getElementById("banner-loader");
 const submitBtnText = submitBtn.querySelector(".btn-text");
 
-
-async function generateBanners(translations, campaign, ad_type) {
+async function generateBanners(translations, campaign, ad_type, size = "1080x1080") {
   const zip = new JSZip();
 
-  const templateRes = await fetch("banner_template.html");
+  const templateUrl = size === "1080x1080" ? "banner_template_1080h.html" : "banner_template_1920h.html";
+  const templateRes = await fetch(templateUrl);
   const template = await templateRes.text();
+
+  const webinarLabels = {
+    cz: 'Webinář pro e-shopy', en: 'Webinar for e-shops', de: 'Webinar für Online-Shops',
+    it: 'Webinar per e-commerce', es: 'Webinar para e-commerce', fr: 'Webinaire pour e-commerce',
+    pl: 'Webinar dla e-sklepów', ro: 'Webinar pentru magazine online', hu: 'Webinár e-shopoknak',
+    pt: 'Webinar para e-commerce', nl: 'Webinar voor webshops',
+  };
+  const badgeLabels = {
+    cz: 'ZDARMA', en: 'FOR FREE', de: 'KOSTENLOS', it: 'GRATIS', es: 'GRATIS', fr: 'GRATUIT',
+    pl: 'ZA DARMO', ro: 'GRATUIT', hu: 'INGYENES', pt: 'GRÁTIS', nl: 'GRATIS',
+  };
 
   for (const [lang, texts] of Object.entries(translations)) {
     const html = template
+      .replace('class="type-normal"', `class="type-${ad_type.replace('_ad', '').replace(/_/g, '-')}"`)
       .replace("{{headline}}", texts.headline)
-      .replace("{{cta_text}}", texts.cta);
+      .replace("{{subheadline}}", texts.subheadline || "")
+      .replace("{{cta_text}}", texts.cta)
+      .replace("{{badge}}", badgeLabels[lang] || badgeLabels.en)
+      .replace("{{webinar_label}}", webinarLabels[lang] || webinarLabels.en);
 
     const container = document.createElement("div");
     container.style.position = "absolute";
@@ -34,16 +49,17 @@ async function generateBanners(translations, campaign, ad_type) {
 
     await document.fonts.ready;
 
+    const [w, h] = size.split("x").map(Number);
     const canvas = await html2canvas(banner, {
-      width: 1080,
-      height: 1080,
+      width: w,
+      height: h,
       scale: 1,
       useCORS: true,
       allowTaint: false,
     });
 
     const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
-    zip.file(`${ad_type}_${campaign}_banner_${lang}_1080x1080.png`, blob);
+    zip.file(`${ad_type}_[${campaign}]_banner-${lang}_${size}.png`, blob);
 
     document.body.removeChild(container);
   }
@@ -52,7 +68,7 @@ async function generateBanners(translations, campaign, ad_type) {
   const url = URL.createObjectURL(zipBlob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${ad_type}__${campaign}_banners.zip`;
+  a.download = `${ad_type}__[${campaign}]_banners.zip`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -135,32 +151,32 @@ btnButton.addEventListener("click", async () => {
 });
 
 document.querySelector("form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    submitBtn.classList.add("loading"); 
-    submitBtnText.style.display = "none";
-    bannerLoader.classList.add("active"); 
+  e.preventDefault();
+  submitBtn.classList.add("loading");
+  submitBtnText.style.display = "none";
+  bannerLoader.classList.add("active");
 
-    try {
-        const res = await fetch(_WEBHOOK_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                action: "generate_banners",
-                headline: document.getElementById("header_text").value.trim(),
-                cta_text: document.getElementById("button_text").value.trim(),
-                campaign: document.getElementById("function").value,
-                ad_type: document.getElementById("ad_type").value,
-            }),
-        });
+  try {
+    const res = await fetch(_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "generate_banners",
+        headline: document.getElementById("header_text").value.trim(),
+        cta_text: document.getElementById("button_text").value.trim(),
+        campaign: document.getElementById("function").value,
+        ad_type: document.getElementById("ad_type").value,
+      }),
+    });
 
-        const data = await res.json();
-        await generateBanners(data, document.getElementById("function").value, document.getElementById("ad_type").value);
-    } catch (err) {
-        console.log("Chyba:", err);
-    } finally {
-        bannerLoader.classList.remove("active");
-        submitBtnText.style.display = "inline";
-        submitBtn.classList.remove("loading");
-        checkForm();
-    }
+    const data = await res.json();
+    await generateBanners(data, document.getElementById("function").value, document.getElementById("ad_type").value);
+  } catch (err) {
+    console.log("Chyba:", err);
+  } finally {
+    bannerLoader.classList.remove("active");
+    submitBtnText.style.display = "inline";
+    submitBtn.classList.remove("loading");
+    checkForm();
+  }
 });
