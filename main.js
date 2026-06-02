@@ -31,7 +31,7 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
 
   for (const [lang, texts] of Object.entries(translations)) {
     const html = template
-      .replace('class="type-normal"', `class="type-${ad_type.replace('_ad', '').replace(/_/g, '-')}"`)
+      .replace('class="banner type-normal"', `class="banner type-${ad_type.replace('_ad', '').replace(/_/g, '-')}"`)
       .replace("{{headline}}", texts.headline)
       .replace("{{subheadline}}", texts.subheadline || "")
       .replace("{{cta_text}}", texts.cta)
@@ -100,7 +100,9 @@ btnGenerate.addEventListener("click", async () => {
 
     const data = await res.json();
     if (data.text) {
-      document.getElementById("header_text").value = data.text;
+      const input = document.getElementById("header_text");
+      input.value = data.text;
+      input.dataset.aiGenerated = "true";
     }
   } catch (err) {
     console.log("Chyba:", err);
@@ -135,7 +137,9 @@ btnButton.addEventListener("click", async () => {
 
     const data = await res.json();
     if (data.text) {
-      document.getElementById("button_text").value = data.text;
+      const input = document.getElementById("button_text");
+      input.value = data.text;
+      input.dataset.aiGenerated = "true";
     }
   } catch (err) {
     console.log("Chyba:", err);
@@ -177,4 +181,18 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     submitBtn.classList.remove("loading");
     checkForm();
   }
+});
+
+document.getElementById("header_text").addEventListener("input", () => {
+  document.getElementById("header_text").dataset.aiGenerated = "false";
+});
+document.getElementById("button_text").addEventListener("input", () => {
+  document.getElementById("button_text").dataset.aiGenerated = "false";
+});
+document.getElementById("function").addEventListener("change", () => {
+  const headline = document.getElementById("header_text");
+  const cta = document.getElementById("button_text");
+  if (headline.dataset.aiGenerated === "true") headline.value = "";
+  if (cta.dataset.aiGenerated === "true") cta.value = "";
+  checkForm();
 });

@@ -5,34 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>banner template 1080h</title>
   <style>
-    /* ─── Brand variables ─────────────────────────────────────── */
     :root {
       --blue-main:   #00386c;
-      --blue-bright: #1988b8;
+      --blue-bright: #259ed2;
       --blue-light:  #1a6fb5;
       --orange:      #df5500;
       --orange-light:#e79106;
       --bg:          #f4f5f7;
       --white:       #ffffff;
     }
-
-    /* ─── Reset & canvas ──────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html, body {
       width:  1080px;
       height: 1080px;
       overflow: hidden;
     }
-
     body {
       background: var(--bg);
       font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
       display: flex;
       align-items: stretch;
     }
-
-    /* ─── Font face ───────────────────────────────────────────── */
     @font-face {
       font-family: 'Graphik'; font-weight: 500;
       src: url('https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f68ca1847539055dcba8_GraphikMedium.otf') format('opentype');
@@ -42,7 +35,6 @@
       src: url('https://cdn.prod.website-files.com/66ccb4fbf212967dcd04d6fc/66d5f6ba07cac216635d0094_GraphikLight.otf') format('opentype');
     }
 
-    /* ─── Banner wrapper ──────────────────────────────────────── */
     .banner {
       width:  1080px;
       height: 1080px;
@@ -50,32 +42,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 72px 80px;
+      justify-content: space-between;
+      padding: 120px 80px;
       gap: 0;
       position: relative;
     }
-
-    /* ─── Logo ────────────────────────────────────────────────── */
     .logo {
       width: 100%;
       display: flex;
       justify-content: center;
       margin-bottom: 48px;
     }
-
     .logo img {
       height: 48px;
       object-fit: contain;
     }
-
-    /* ─── Badge ZDARMA (lead magnet only) ────────────────────── */
     .badge-zdarma {
       display: none;
       background: var(--orange);
       color: var(--white);
       font-family: 'Graphik', sans-serif;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 28px;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -83,24 +70,21 @@
       border-radius: 50px;
       margin-bottom: 36px;
     }
-
-    /* ─── Webinar label ───────────────────────────────────────── */
     .label-webinar {
       display: none;
       font-family: 'Graphik', sans-serif;
-      font-weight: 300;
-      font-size: 28px;
+      font-weight: 400;
+      font-size: 48px;
       color: var(--blue-main);
       letter-spacing: 0.5px;
       margin-bottom: 24px;
       text-align: center;
+      text-decoration: underline;
     }
-
-    /* ─── Headline ────────────────────────────────────────────── */
     .headline {
       font-family: 'Graphik', sans-serif;
       font-weight: 500;
-      font-size: 72px;
+      font-size: 84px;
       line-height: 1.1;
       text-align: center;
       background: linear-gradient(135deg, var(--blue-bright) 0%, var(--blue-main) 100%);
@@ -110,12 +94,10 @@
       margin-bottom: 24px;
       max-width: 880px;
     }
-
-    /* ─── Subheadline (normal ad only) ───────────────────────── */
     .subheadline {
       display: none;
       font-family: 'Graphik', sans-serif;
-      font-weight: 500;
+      font-weight: 450;
       font-size: 36px;
       color: var(--blue-main);
       text-align: center;
@@ -123,53 +105,37 @@
       max-width: 800px;
       line-height: 1.25;
     }
-
-    /* ─── CTA Button ──────────────────────────────────────────── */
     .cta-button {
       display: inline-block;
       background: linear-gradient(-30deg, var(--orange) 0%, var(--orange-light) 100%);
       color: var(--white);
       font-family: 'Graphik', sans-serif;
       font-weight: 500;
-      font-size: 36px;
-      padding: 28px 50px;
+      font-size: 48px;
+      padding: 28px 56px;
       border-radius: 12px;
       text-align: center;
       max-width: 800px;
-      margin-top: 48px;
+      margin-bottom: 1em;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       Layout rules — which elements show per ad type
-       ═══════════════════════════════════════════════════════════ */
-
-    /* Normal ad */
-    body.type-normal .subheadline       { display: block; }
-    body.type-normal .headline          { font-size: 64px; margin-bottom: 20px; }
-    body.type-normal .cta-button        { margin-top: 36px; }
-
-    /* Lead magnet */
-    body.type-lead-magnet .badge-zdarma  { display: inline-block; }
-    body.type-lead-magnet .headline      { font-size: 68px; }
-
-    /* Webinar — no visual placeholder on 1080x1080 */
-    body.type-webinar .label-webinar    { display: block; }
-    body.type-webinar .headline         { font-size: 68px; }
-    body.type-webinar .cta-button       { margin-top: 56px; }
+    .banner.type-normal .subheadline       { display: block; }
+    .banner.type-lead-magnet .badge-zdarma  { display: inline-block; }
+    .banner.type-webinar .label-webinar    { display: block; }
 
   </style>
 </head>
-<body class="type-normal">
+<body>
 
-  <div class="banner">
+  <div class="banner type-normal">
 
     <div class="logo">
       <img src="/images/tanganica_logo.svg" alt="Tanganica">
     </div>
 
-    <div class="badge-zdarma">ZDARMA</div>
+    <div class="badge-zdarma">{{badge}}</div>
 
-    <div class="label-webinar">Webinář pro e-shopy</div>
+    <div class="label-webinar">{{webinar_label}}</div>
 
     <div class="headline">{{headline}}</div>
 

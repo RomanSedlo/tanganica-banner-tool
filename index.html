@@ -61,20 +61,27 @@
 
         <div>
             <label for="header_text">Headline</label>
-            <input type="text" id="header_text" name="header_text" placeholder="Enhance your product photos with AI"
-                class="main_input">
-            <button type="button" id="btn-headline" title="Generate headline text with AI.">
+            <input type="text" id="header_text" name="header_text" class="main_input" placeholder="Enhance your product photos with AI">
+            <button type="button" id="btn-headline-improve" title="Improve current headline with AI." disabled>
+                    <span class="btn-text">💫 Improve</span>
+                    <span class="spinner" id="spinner-headline-improve"></span>
+            </button>
+            <button type="button" id="btn-headline-generate" title="Generate headline text with AI.">
                 <span class="btn-text">✨ Generate</span>
-                <span class="spinner" id="spinner-headline"></span>
+                <span class="spinner" id="spinner-headline-generate"></span>
             </button>
         </div>
 
         <div>
             <label for="button_text">Button text</label>
             <input type="text" id="button_text" name="button_text" placeholder="Try for free" class="main_input">
-            <button type="button" id="btn-button" title="Generate button text with AI">
+            <button type="button" id="btn-cta-improve" title="Improve current button text with AI." disabled>
+                    <span class="btn-text">💫 Improve</span>
+                    <span class="spinner" id="spinner-cta-improve"></span>
+            </button>
+            <button type="button" id="btn-cta-generate" title="Generate button text with AI">
                 <span class="btn-text">✨ Generate</span>
-                <span class="spinner" id="spinner-button"></span>
+                <span class="spinner" id="spinner-button-generate"></span>
             </button>
         </div>
 
