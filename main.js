@@ -65,7 +65,7 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
   const url = URL.createObjectURL(zipBlob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${ad_type}__[${campaign}]_banners.zip`;
+  a.download = `${ad_type}__[${campaign}]_banners_${new Date().getHours()}-${new Date().getMinutes()}.zip`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -124,7 +124,8 @@ function updateImproveButtons() {
 }
 
 btnHeadlineGenerate.addEventListener("click", () => {
-  callGenerateText("headline", "", "", "header_text", btnHeadlineGenerate);
+  callGenerateText("headline", document.getElementById("header_text").value.trim(),
+  document.getElementById("button_text").value.trim(), "header_text", btnHeadlineGenerate);
 });
 
 btnHeadlineImprove.addEventListener("click", () => {
