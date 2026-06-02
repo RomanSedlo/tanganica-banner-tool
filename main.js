@@ -1,10 +1,9 @@
 const _WEBHOOK_URL = "https://creative-automation-tool.marketing-e01.workers.dev/"
 
-const btnGenerate = document.getElementById("btn-headline");
-const spinner = document.getElementById("spinner-headline");
-
-const btnButton = document.getElementById("btn-button");
-const spinnerButton = document.getElementById("spinner-button");
+const btnHeadlineImprove = document.getElementById("btn-headline-improve");
+const btnHeadlineGenerate = document.getElementById("btn-headline-generate");
+const btnCtaImprove = document.getElementById("btn-cta-improve");
+const btnCtaGenerate = document.getElementById("btn-cta-generate");
 
 const submitBtn = document.querySelector("button[type='submit']");
 const requiredInputs = document.querySelectorAll("input[type='text']");
@@ -78,78 +77,84 @@ function checkForm() {
 requiredInputs.forEach(input => input.addEventListener("input", checkForm));
 checkForm();
 
-btnGenerate.addEventListener("click", async () => {
-  btnGenerate.disabled = true;
+async function callGenerateText(field, currentHeadline, currentCTA, targetInputId, btn) {
+  const allBtns = [btnHeadlineImprove, btnHeadlineGenerate, btnCtaImprove, btnCtaGenerate];
+  allBtns.forEach(b => b.disabled = true);
   submitBtn.disabled = true;
-  spinner.classList.add("active");
-  btnGenerate.querySelector(".btn-text").style.display = "none";
+  btn.querySelector(".spinner").classList.add("active");
+  btn.querySelector(".btn-text").style.display = "none";
 
   try {
     const res = await fetch(_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        action: "generate_text",
-        field: "headline",
+        action: btn === btnHeadlineImprove || btn === btnCtaImprove ? "improve_text" : "generate_text",
+        field,
         type: document.getElementById("ad_type").value,
         campaign: document.getElementById("function").value,
-        currentHeadline: document.getElementById("header_text").value.trim(),
-        currentCTA: document.getElementById("button_text").value.trim(),
+        currentHeadline,
+        currentCTA,
       }),
     });
 
     const data = await res.json();
     if (data.text) {
-      const input = document.getElementById("header_text");
+      const input = document.getElementById(targetInputId);
       input.value = data.text;
       input.dataset.aiGenerated = "true";
+      updateImproveButtons();
+      checkForm();
     }
   } catch (err) {
     console.log("Chyba:", err);
   } finally {
-    spinner.classList.remove("active");
-    btnGenerate.querySelector(".btn-text").style.display = "inline";
-    btnGenerate.disabled = false;
+    btn.querySelector(".spinner").classList.remove("active");
+    btn.querySelector(".btn-text").style.display = "inline";
+    allBtns.forEach(b => b.disabled = false);
+    updateImproveButtons();
     submitBtn.disabled = false;
     checkForm();
   }
+}
+
+function updateImproveButtons() {
+  btnHeadlineImprove.disabled = document.getElementById("header_text").value.trim() === "";
+  btnCtaImprove.disabled      = document.getElementById("button_text").value.trim() === "";
+}
+
+btnHeadlineGenerate.addEventListener("click", () => {
+  callGenerateText("headline", "", "", "header_text", btnHeadlineGenerate);
 });
 
-btnButton.addEventListener("click", async () => {
-  btnButton.disabled = true;
-  submitBtn.disabled = true;
-  spinnerButton.classList.add("active");
-  btnButton.querySelector(".btn-text").style.display = "none";
+btnHeadlineImprove.addEventListener("click", () => {
+  callGenerateText(
+    "headline",
+    document.getElementById("header_text").value.trim(),
+    document.getElementById("button_text").value.trim(),
+    "header_text",
+    btnHeadlineImprove
+  );
+});
 
-  try {
-    const res = await fetch(_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        action: "generate_text",
-        field: "button_text",
-        type: document.getElementById("ad_type").value,
-        campaign: document.getElementById("function").value,
-        currentHeadline: document.getElementById("header_text").value.trim(),
-        currentCTA: document.getElementById("button_text").value.trim(),
-      }),
-    });
+btnCtaGenerate.addEventListener("click", () => {
+  callGenerateText(
+    "button_text",
+    document.getElementById("header_text").value.trim(),
+    "",
+    "button_text",
+    btnCtaGenerate
+  );
+});
 
-    const data = await res.json();
-    if (data.text) {
-      const input = document.getElementById("button_text");
-      input.value = data.text;
-      input.dataset.aiGenerated = "true";
-    }
-  } catch (err) {
-    console.log("Chyba:", err);
-  } finally {
-    spinnerButton.classList.remove("active");
-    btnButton.querySelector(".btn-text").style.display = "inline";
-    btnButton.disabled = false;
-    submitBtn.disabled = false;
-    checkForm();
-  }
+btnCtaImprove.addEventListener("click", () => {
+  callGenerateText(
+    "button_text",
+    document.getElementById("header_text").value.trim(),
+    document.getElementById("button_text").value.trim(),
+    "button_text",
+    btnCtaImprove
+  );
 });
 
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -185,9 +190,11 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
 document.getElementById("header_text").addEventListener("input", () => {
   document.getElementById("header_text").dataset.aiGenerated = "false";
+  updateImproveButtons();
 });
 document.getElementById("button_text").addEventListener("input", () => {
   document.getElementById("button_text").dataset.aiGenerated = "false";
+  updateImproveButtons();
 });
 document.getElementById("function").addEventListener("change", () => {
   const headline = document.getElementById("header_text");
