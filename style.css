@@ -42,7 +42,7 @@ form {
 
 form div {
   display: grid;
-  grid-template-columns: 120px 3fr 1fr 1fr;
+  grid-template-columns: 120px 1fr 130px 130px;
   align-items: center;
   gap: 8px;
 }
@@ -93,7 +93,9 @@ option {
 }
 
 .size_input {
-  display: flex; gap: 1em; align-items: center;
+  display: flex;
+  gap: 1em;
+  align-items: center;
 }
 .main_input {
   width: 24em;

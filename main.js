@@ -10,9 +10,11 @@ const requiredInputs = document.querySelectorAll("input[type='text']");
 const bannerLoader = document.getElementById("banner-loader");
 const submitBtnText = submitBtn.querySelector(".btn-text");
 
-document.querySelector('input[name="banner_size"]:checked').addEventListener("change", () => {
-  const is1920 = document.querySelector('input[name="banner_size"]:checked').value === "1080x1920";
-  document.getElementById("image-upload-wrap").style.display = is1920 ? "block" : "none";
+document.querySelectorAll('input[name="banner_size"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    const is1920 = document.querySelector('input[name="banner_size"]:checked').value === "1080x1920";
+    document.getElementById("image-upload-wrap").style.display = is1920 ? "grid" : "none";
+  });
 });
 
 async function generateBanners(translations, campaign, ad_type, size) {
