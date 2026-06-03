@@ -15,7 +15,7 @@
 :root {
   --primary: darkblue;
   --secondary: aliceblue;
-  --accent: aquamarine;
+  --accent: rgb(178, 215, 233);
   --strong-primary: rgb(0, 0, 52);
 }
 
@@ -60,6 +60,10 @@ button {
 
 button:hover {
   background-color: var(--accent);
+  transform: scale(1.05);
+}
+button:disabled:hover {
+  transform: scale(0.9);
 }
 button[type="submit"] {
   font-weight: 600;
@@ -81,7 +85,16 @@ label {
   font-weight: 600;
   color: var(--strong-primary)
 }
+optgroup {
+  background-color: var(--accent);
+}
+option {
+  background-color: var(--secondary);
+}
 
+.size_input {
+  display: flex; gap: 1em; align-items: center;
+}
 .main_input {
   width: 24em;
 }

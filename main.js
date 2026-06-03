@@ -10,10 +10,15 @@ const requiredInputs = document.querySelectorAll("input[type='text']");
 const bannerLoader = document.getElementById("banner-loader");
 const submitBtnText = submitBtn.querySelector(".btn-text");
 
-async function generateBanners(translations, campaign, ad_type, size = "1080x1080") {
+document.querySelector('input[name="banner_size"]:checked').addEventListener("change", () => {
+  const is1920 = document.querySelector('input[name="banner_size"]:checked').value === "1080x1920";
+  document.getElementById("image-upload-wrap").style.display = is1920 ? "block" : "none";
+});
+
+async function generateBanners(translations, campaign, ad_type, size) {
   const zip = new JSZip();
 
-  const templateUrl = size === "1080x1080" ? "banner_template_1080h.html" : "banner_template_1920h.html";
+  const templateUrl = size === "1080x1080" ? "templates/banner_template_1080h.html" : "templates/banner_template_1920h.html";
   const templateRes = await fetch(templateUrl);
   const template = await templateRes.text();
 
@@ -28,6 +33,18 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
     pl: 'ZA DARMO', ro: 'GRATUIT', hu: 'INGYENES', pt: 'GRÁTIS', nl: 'GRATIS',
   };
 
+  let imageDataUrl = null;
+  if (size === "1080x1920") {
+    const file = document.getElementById("banner_image").files[0];
+    if (file) {
+      imageDataUrl = await new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
   for (const [lang, texts] of Object.entries(translations)) {
     const html = template
       .replace('class="banner type-normal"', `class="banner type-${ad_type.replace('_ad', '').replace(/_/g, '-')}"`)
@@ -35,7 +52,8 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
       .replace("{{subheadline}}", texts.subheadline || "")
       .replace("{{cta_text}}", texts.cta)
       .replace("{{badge}}", badgeLabels[lang] || badgeLabels.en)
-      .replace("{{webinar_label}}", webinarLabels[lang] || webinarLabels.en);
+      .replace("{{webinar_label}}", webinarLabels[lang] || webinarLabels.en)
+      .replace('src="https://placehold.co/720"', imageDataUrl ? `src="${imageDataUrl}"` : 'src="https://placehold.co/720"');
 
     const container = document.createElement("div");
     container.style.position = "absolute";
@@ -56,16 +74,18 @@ async function generateBanners(translations, campaign, ad_type, size = "1080x108
       cacheBust: true,
     });
 
-    zip.file(`${ad_type}_[${campaign}]_banner-${lang}_${size}.png`, blob);
+    zip.file(`${ad_type}_[${campaign}]_banner_<${lang}>_${size}.png`, blob);
 
     document.body.removeChild(container);
   }
+
+  const currentTime = `${new Date().getHours().toString().padStart(2, 0)}-${new Date().getMinutes().toString().padStart(2, 0)}`;
 
   const zipBlob = await zip.generateAsync({ type: "blob" });
   const url = URL.createObjectURL(zipBlob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${ad_type}__[${campaign}]_banners_${new Date().getHours()}-${new Date().getMinutes()}.zip`;
+  a.download = `${ad_type}__[${campaign}]_banners__${size}_${currentTime}.zip`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -178,7 +198,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
-    await generateBanners(data, document.getElementById("function").value, document.getElementById("ad_type").value);
+    const size = document.querySelector('input[name="banner_size"]:checked').value;
+    await generateBanners(data, document.getElementById("function").value, document.getElementById("ad_type").value, size);
   } catch (err) {
     console.log("Chyba:", err);
   } finally {
