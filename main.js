@@ -17,6 +17,20 @@ document.querySelectorAll('input[name="banner_size"]').forEach(radio => {
   });
 });
 
+let logoBase64 = null;
+
+async function preloadLogo() {
+  const response = await fetch('images/tanganica_logo.svg');
+  const blob = await response.blob();
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => { logoBase64 = reader.result; resolve(); };
+    reader.readAsDataURL(blob);
+  });
+}
+
+preloadLogo();
+
 async function generateBanners(translations, campaign, ad_type, size) {
   const zip = new JSZip();
 
@@ -46,7 +60,7 @@ async function generateBanners(translations, campaign, ad_type, size) {
       });
     }
   };
-
+  
   for (const [lang, texts] of Object.entries(translations)) {
     const html = template
       .replace('class="banner type-normal"', `class="banner type-${ad_type.replace('_ad', '').replace(/_/g, '-')}"`)
@@ -55,6 +69,7 @@ async function generateBanners(translations, campaign, ad_type, size) {
       .replace("{{cta_text}}", texts.cta)
       .replace("{{badge}}", badgeLabels[lang] || badgeLabels.en)
       .replace("{{webinar_label}}", webinarLabels[lang] || webinarLabels.en)
+      .replaceAll(/src="[^"]*tanganica_logo\.svg[^"]*"/g, `src="${logoBase64}"`)
       .replace('src="https://placehold.co/720"', imageDataUrl ? `src="${imageDataUrl}"` : 'src="https://placehold.co/720"');
 
     const container = document.createElement("div");
