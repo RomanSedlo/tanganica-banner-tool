@@ -120,7 +120,7 @@ async function callGenerateText(field, currentHeadline, currentCTA, targetInputI
         currentCTA
       }),
     });
-    console.log("input:", JSON.stringify({action: btn === btnHeadlineImprove || btn === btnCtaImprove ? "improve_text" : "generate_text", field, type: document.getElementById("ad_type").value, campaign: document.getElementById("function").value, currentHeadline, currentCTA}));
+    // console.log("input:", JSON.stringify({action: btn === btnHeadlineImprove || btn === btnCtaImprove ? "improve_text" : "generate_text", field, type: document.getElementById("ad_type").value, campaign: document.getElementById("function").value, currentHeadline, currentCTA}));
 
     const data = await res.json();
     if (data.text) {
@@ -128,7 +128,7 @@ async function callGenerateText(field, currentHeadline, currentCTA, targetInputI
       input.value = data.text;
       input.dataset.aiGenerated = "true";
       checkForm();
-      console.log("output:", data.text);
+      // console.log("output:", data.text);
     }
   } catch (err) {
     console.log("Chyba:", err);
