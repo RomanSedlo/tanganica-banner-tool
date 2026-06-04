@@ -124,8 +124,15 @@
       margin-bottom: 1em;
     }
     .platforms {
-      font-size: 48px;
-      word-spacing: 64px;
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+    .platform {
+      height: 64px;
+      width: auto;
+      object-fit: contain;
     }
 
     .banner.type-normal .subheadline { display: block; }
@@ -154,7 +161,11 @@
 
     <div class="cta-button">{{cta_text}}</div>
 
-    <div class="platforms">Google-ads Meta Bing</div>
+    <div class="platforms">
+      <img class="platform" src="images/google_ads.png" alt="Google Ads">
+      <img class="platform" src="images/meta.png" alt="Meta">
+      <img class="platform" src="images/bing.png" alt="Bing" style="transform: scale(0.8);">
+    </div>
 
   </div>
 
