@@ -38,7 +38,7 @@ async function preloadImage(path) {
   });
 }
 
-preloadLogos();
+preloadLogos().then(() => console.log("logos loaded:", Object.keys(logos), logos.google?.slice(0, 30)));
 
 async function generateBanners(translations, campaign, ad_type, size) {
   const zip = new JSZip();
