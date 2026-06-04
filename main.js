@@ -95,6 +95,7 @@ async function generateBanners(translations, campaign, ad_type, size) {
 function checkForm() {
   const allFilled = [...requiredInputs].every(input => input.value.trim() !== "");
   submitBtn.disabled = !allFilled;
+  updateImproveButtons();
 }
 requiredInputs.forEach(input => input.addEventListener("input", checkForm));
 checkForm();
@@ -116,17 +117,18 @@ async function callGenerateText(field, currentHeadline, currentCTA, targetInputI
         type: document.getElementById("ad_type").value,
         campaign: document.getElementById("function").value,
         currentHeadline,
-        currentCTA,
+        currentCTA
       }),
     });
+    console.log("input:", JSON.stringify({action: btn === btnHeadlineImprove || btn === btnCtaImprove ? "improve_text" : "generate_text", field, type: document.getElementById("ad_type").value, campaign: document.getElementById("function").value, currentHeadline, currentCTA}));
 
     const data = await res.json();
     if (data.text) {
       const input = document.getElementById(targetInputId);
       input.value = data.text;
       input.dataset.aiGenerated = "true";
-      updateImproveButtons();
       checkForm();
+      console.log("output:", data.text);
     }
   } catch (err) {
     console.log("Chyba:", err);
@@ -134,7 +136,6 @@ async function callGenerateText(field, currentHeadline, currentCTA, targetInputI
     btn.querySelector(".spinner").classList.remove("active");
     btn.querySelector(".btn-text").style.display = "inline";
     allBtns.forEach(b => b.disabled = false);
-    updateImproveButtons();
     submitBtn.disabled = false;
     checkForm();
   }
