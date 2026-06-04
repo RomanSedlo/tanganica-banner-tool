@@ -1,0 +1,274 @@
+{
+  "name": "Automatizace selfmarketing - Překládání textů",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "7d35b8e6-d565-4c07-8c34-d24e62ee9511",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -176,
+        0
+      ],
+      "id": "e0f61623-98ad-4e99-84f4-49c9455b4a62",
+      "name": "Webhook",
+      "webhookId": "7d35b8e6-d565-4c07-8c34-d24e62ee9511"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1424,
+        0
+      ],
+      "id": "9f24ddb2-e43f-4dc7-ac69-7aecb3cdc3a8",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "const types = {\n  \"normal_ad\": \"Standard performance ad for Tanganica. HEADLINE: A short, confident benefit statement — not a question, not a command, just a clear declaration of what this feature does for the e-shop owner. Maximum 8 words. No question mark, no exclamation mark. The tone is professional and direct — like a statement from someone who knows what they're talking about. Focus on exactly one concrete benefit: what changes for the e-shop owner when they use this feature? Think in terms of outcomes: more revenue, less time wasted, better performance, fewer mistakes. Avoid vague words like 'better', 'smarter', 'easier' unless paired with something specific. The headline should feel like it belongs in a high-quality SaaS ad — punchy, no fluff, every word earns its place. BUTTON: An action verb followed by 1-2 words that describe what happens next. 2-3 words total. Should feel like a low-friction first step — starting, trying, boosting — not a big commitment.\",\n\n  \"lead_magnet\": \"Free resource or tool ad for Tanganica. HEADLINE: A question that creates a curiosity gap or surfaces a real pain point that e-shop owners experience. The question should make the reader feel slightly uncomfortable — like they're missing something important, or wasting money, or falling behind. Maximum 10 words, always ends with a question mark. Tone is conversational and slightly provocative — not aggressive, but direct enough to stop the scroll. The question should be specific to e-commerce reality: ad spend, product visibility, conversion rates, wasted budget. Avoid generic questions that could apply to any business. The best questions make the reader think 'wait, am I actually doing this wrong?'. BUTTON: Implies immediate free access with zero friction. 2-3 words, starts with a verb. Should feel like the answer to the headline question is one click away — and it costs nothing.\",\n\n  \"webinar\": \"Webinar promotion ad for Tanganica. HEADLINE: Always a 'How to' question about a specific, practical e-commerce growth topic. Maximum 10 words, always ends with a question mark. The question should promise a clear, actionable outcome — not vague inspiration, but a real skill or strategy the viewer will walk away with. Tone is educational and outcome-focused: the reader should feel that attending this webinar will give them a concrete advantage. The topic should feel timely and relevant — something an e-shop owner would genuinely want to know right now. Avoid broad topics; the more specific the better. BUTTON: Implies easy registration with a sense of limited availability or commitment. 2-3 words, starts with a verb. Should feel like securing a spot, not just clicking a link.\"\n};\n\nconst functions = {\n  \"google_ads\": \"Automated Google Ads — promotes products across Google Search, Google Shopping, YouTube and the Display Network. AI optimizes bids, targeting and budgets 24/7 without any manual work. Proven to achieve up to 41% better ROAS than manually managed campaigns, based on comparison across 500+ e-shops. Works alongside existing campaigns without affecting them. E-shops using Tanganica can expand their reach by up to 35% and generate significant additional revenue on top of what their own campaigns already bring.\",\n\n  \"facebook_ads\": \"Automated Facebook and Meta Ads — drives brand awareness and sales on Facebook and Instagram. AI creates, tests and optimizes ads automatically — no creative or targeting expertise needed from the e-shop owner. Runs fully independently from any existing campaigns, so current ad sets are never disrupted. Particularly effective for reaching new audiences and pulling in customers who haven't discovered the store yet.\",\n\n  \"bing_ads\": \"Automated Bing Ads — captures high-intent shoppers searching on Bing, a platform most competitors ignore. Simple one-click setup, AI-powered optimization. Lower competition on Bing often means cheaper clicks and strong ROAS for e-shops willing to go beyond Google. Straightforward way to add an extra revenue channel with minimal effort.\",\n\n  \"ai_campaign_creation\": \"One-click AI campaign creation — generates a complete, ready-to-run ad campaign tailored specifically to the e-shop within seconds. AI selects the best ad formats, writes the copy and configures targeting automatically. No manual work, no agency, no technical knowledge required. The fastest possible way to go from zero to live campaigns — the whole setup takes minutes, not days.\",\n\n  \"budget_splitting\": \"Automatic budget allocation — AI continuously monitors campaign performance in real time and redistributes the ad budget toward the best-performing campaigns automatically. Eliminates wasted spend on underperformers without the e-shop owner having to touch anything. Owner sets a target ROAS or PNO, Tanganica handles all the optimization to hit it.\",\n\n  \"ai_product_attributes\": \"AI Product Attributes — automatically detects and fixes missing, incomplete or low-quality product feed data. Enriches product titles, descriptions and categories to meet Google Shopping and Meta requirements. Better feed data means better ad placement, higher click-through rates and improved ROAS across all platforms. Removes the most common technical bottleneck that holds back product ad performance.\",\n\n  \"conversion_funnel\": \"Conversion funnel analysis — AI maps every step of the buyer journey from first visit to completed purchase. Pinpoints exactly where customers drop off — product pages, cart, checkout — and benchmarks those drop-off rates against industry standards in real time. Tells the e-shop owner precisely what to fix to convert more of their existing traffic into paying customers, without needing more ad spend.\",\n\n  \"performance_benchmarks\": \"Performance benchmarks — compares the e-shop's key metrics (ROAS, PNO, conversion rate, traffic) against other online stores in the same category. Shows clearly where the e-shop is trailing the industry average and where it's already outperforming competitors. Turns abstract numbers into actionable priorities — the owner sees exactly where to invest next for the biggest impact.\",\n\n  \"seo_analysis\": \"SEO analysis — instant health check of the e-shop's organic search performance: overall SEO score, page load speed and keyword rankings at a glance. Generates personalized, step-by-step improvement tips tailored specifically to the website. Helps e-shops rank higher in organic search, load faster for users, and also improves Quality Scores for paid ads — better SEO directly lowers the cost of advertising.\",\n\n  \"competitor_analysis\": \"Competitor analysis — automatically identifies the e-shop's closest competitors, assigns each a similarity score, and displays their monthly traffic, bounce rate and top-ranking keywords side by side in one dashboard. No manual research needed. Reveals exactly what competing stores are doing well so the owner knows what gaps to exploit and what strengths to counter.\",\n\n  \"product_conversion_rate\": \"Product conversion rate — shows which products are converting well and which are underperforming relative to the traffic they receive. Full conversion rate breakdown by product, sortable by sales volume, margin and conversion rate. Helps owners make smarter decisions about which products to push in ads, which product pages need improvement, and which SKUs are wasting ad budget.\",\n\n  \"website_monitoring\": \"Website monitoring — continuously checks whether the e-shop is accessible to customers around the clock. Sends an instant alert the moment downtime is detected, minimizing lost sales. Especially critical for stores running active ad campaigns — downtime during a live campaign means every click is wasted money. Gives peace of mind that the store is always open for business.\",\n\n  \"campaign_performance\": \"Campaign performance analytics — unified performance dashboard showing all campaigns across Google, Meta and Bing in one place. Revenue, costs, ROAS and PNO for every campaign at a glance — no more jumping between ad platforms. Makes it fast and easy to identify which campaigns are winning, which are draining budget, and where to scale. Clear enough that anyone on the team can read it without an ads background.\",\n\n  \"order_sources\": \"Order sources attribution — automatically connects every completed purchase to the exact channel, campaign, ad set or referral source that drove it. Eliminates the guesswork of 'which marketing is actually working' by showing real revenue per channel, not just clicks or impressions. Enables confident budget decisions based on actual sales data rather than assumptions or last-click models.\",\n\n  \"traffic_analysis\": \"Traffic analysis — complete breakdown of where visitors are coming from: organic search, paid ads, direct, referral, social media. Shows conversion rates by traffic source so the owner can see which channels actually drive revenue versus which just generate noise. Helps prioritize where to invest time and money to grow the business most efficiently.\",\n\n  \"product_performance\": \"Product performance analytics — detailed sales report for every product in the store: revenue, margin, order volume and conversion rate. Instantly sortable to surface bestsellers and identify slow-moving inventory that's burning ad budget. Helps focus advertising on the products most likely to generate profit and gives the data needed to make smarter inventory decisions.\",\n\n  \"category_performance\": \"Category performance — shows which product categories generate the most revenue, have the highest conversion rates and deserve more ad investment. One simple dashboard view to identify where the e-shop is already strong and where growth is being left on the table. Especially useful for stores with large catalogs where it's hard to know where to focus.\",\n\n  \"ai_product_videos\": \"AI Product Videos — generates professional product videos in just a few clicks and seconds, ready for Meta Reels, Instagram Stories, YouTube and Google Display campaigns. Removes the need for expensive video production agencies or equipment — the e-shop just picks a product and gets a polished video. Video ads consistently outperform static image ads in reach and engagement on social platforms.\",\n\n  \"blog_content\": \"AI Blog Content — generates complete, SEO-optimized blog articles tailored to the e-shop's products and niche. Strengthens organic search rankings, builds brand authority and drives free long-term traffic to the store. Removes hours of writing work per week while keeping the content calendar full and the website fresh for both readers and search engines.\",\n\n  \"social_media_content\": \"AI Social Media Content — generates ready-to-post content for Facebook, Instagram and other social platforms automatically. No more blank-page paralysis or hours spent writing captions and thinking up post ideas. Keeps the e-shop's social presence consistently active without taking time away from running the actual business.\",\n\n  \"ad_creation\": \"AI Ad Creation — one click generates high-converting ad copy for Google, Meta and Bing campaigns. AI writes headlines, descriptions and CTAs optimized for the specific platform, product and audience. Removes the need for a dedicated copywriter and consistently produces ad texts that perform — especially useful when launching new campaigns quickly or testing multiple creative angles.\",\n\n  \"ai_image_generation\": \"AI Image Generation — creates professional, visually attractive product image backgrounds that make product photos stand out in ads, Google Shopping listings and social media feeds. Transforms plain white-background product photos into scroll-stopping visuals at a fraction of traditional studio photography costs. Better product visuals directly improve click-through rates in both paid and organic channels.\",\n\n  \"newsletter_content\": \"AI Newsletter Content — generates complete email campaign content including subject lines, body copy and CTAs tailored to the e-shop's products and customer base. Keeps email marketing active and consistent without spending hours designing and writing each newsletter from scratch. Email remains one of the highest-ROI marketing channels for e-commerce — this makes it effortless to maintain.\"\n};\n\nconst type = $input.first().json.body.type;\nconst campaign = $input.first().json.body.campaign;\n\nreturn [{\n  json: {\n    ...$input.first().json,\n    ...$input.first().json.body,\n    typeDescription: types[type] ?? \"General Tanganica ad. Headline should be a short, benefit-focused statement for e-commerce store owners.\",\n    campaignDescription: functions[campaign] ?? \"General Tanganica marketing campaign — AI-powered advertising platform for e-commerce stores.\"\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "40e1d1b0-7db4-4b0b-95b1-8f90327f47ca",
+      "name": "input js"
+    },
+    {
+      "parameters": {
+        "jsCode": "let text = $input.first().json.content[0].text;\ntext = text.replace(/```json\\n?/g, \"\").replace(/```/g, \"\").trim();\nreturn [{ json: JSON.parse(text) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        0
+      ],
+      "id": "339f3752-336f-4e95-83ed-e8e8933c27d6",
+      "name": "format js"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4ce31232-388b-4b14-ab98-06bcd0662c8d",
+              "leftValue": "={{ $json.ad_type }}",
+              "rightValue": "=normal_ad",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        160,
+        0
+      ],
+      "id": "586e19cd-10a3-4813-88e6-c2ed231b8887",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-6"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Split this headline into two parts for a display ad:\n- headline: the main punchy statement, max 5 words\n- subheadline: supporting detail or benefit, max 8 words\n\nHeadline to split: {{ $json.body.headline }}\n\nReturn ONLY valid JSON:\n{\"headline\": \"...\", \"subheadline\": \"...\"}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -192
+      ],
+      "id": "65bfca75-a914-4a38-9791-639cd6fff549",
+      "name": "split headline",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "credentials": {
+        "anthropicApi": {
+          "id": "VJcbM2s3gvmGXGRG",
+          "name": "Anthropic account banner automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-6",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-6"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are a professional marketing translator for Tanganica, an e-commerce ads automation platform.\n\nTranslate the following ad texts from English into all 11 target languages. Keep the marketing tone, keep it punchy and natural for each market — do NOT translate literally. Make each translation sound fluent and natural for a native speaker, not clipped or robotic — use natural phrasing even if slightly longer (e.g. include possessive pronouns where they sound natural). Button text should stay 2-4 words, but still natural, and feels like is something that follows after the headline.\n\nAd type context: {{ $json.typeDescription }}\nCampaign context: {{ $json.campaignDescription }}\n\nHEADLINE: {{ $json.headline }}\n{{$json.subheadline ? \"SUBHEADLINE: \" + $json.subheadline : \"\"}}\nBUTTON TEXT: {{ $json.body.cta_text }}\n\nOnly if the headline or button text is grammatically broken, incomplete, or clearly missing context (e.g. references something unknown without explanation), edit the English original before translating — use this context to fix it: {{ $json.body.campaignDescription }} and ad type: {{ $json.body.typeDescription }}. In all other cases, translate as-is.\n{{$json.subheadline ? \"Translate subheadline for each language.\" : \"Set subheadline to empty string \\\"\\\" for all languages.\"}}\n\nAdditional translation rules:\n- German (de): capitalize all nouns as per standard German grammar\n- Hungarian (hu): pay special attention to vowel harmony in suffixes\n- For all languages: preserve any numbers, percentages or brand names (e.g. \"Tanganica\") exactly as-is\n- If a marketing term has no natural equivalent, use the English term rather than a forced translation\n\nTarget languages: cz (Czech), en (English - keep original), it (Italian), de (German), es (Spanish), fr (French), pl (Polish), ro (Romanian), hu (Hungarian), pt (Portuguese), nl (Dutch)\n\nReturn ONLY valid JSON in exactly this structure, nothing else — no markdown, no code fences, no explanation:\n{\n  \"cz\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"en\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"it\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"de\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"es\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"fr\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"pl\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"ro\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"hu\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"pt\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" },\n  \"nl\": { \"headline\": \"...\", \"subheadline\": \"...\", \"cta\": \"...\" }\n}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        960,
+        0
+      ],
+      "id": "1e4ff151-5060-450d-abb1-19f0840d0841",
+      "name": "translate",
+      "credentials": {
+        "anthropicApi": {
+          "id": "VJcbM2s3gvmGXGRG",
+          "name": "Anthropic account banner automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const original = $('input js').first().json;\nconst text = $input.first().json.content[0].text.replace(/```json\\n?/g, \"\").replace(/```/g, \"\").trim();\nconst split = JSON.parse(text);\n\nreturn [{\n  json: {\n    ...original,\n    headline: split.headline,\n    subheadline: split.subheadline,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        -192
+      ],
+      "id": "6bda5c40-7cc3-4005-bd9c-3e222873748c",
+      "name": "aply split js"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "input js",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "input js": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format js": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "split headline",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "translate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "translate": {
+      "main": [
+        [
+          {
+            "node": "format js",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "split headline": {
+      "main": [
+        [
+          {
+            "node": "aply split js",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "aply split js": {
+      "main": [
+        [
+          {
+            "node": "translate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c5f87456-2f98-424f-8404-823c56385d0c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c40fcc318c1f154d10bf7e2dce41ecfe7662ce4d3dc9cad544b73ed3e875b238"
+  },
+  "id": "gPmq5RJStML2ulId",
+  "tags": []
+}

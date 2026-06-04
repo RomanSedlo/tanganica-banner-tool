@@ -52,13 +52,6 @@ GitHub Pages (index.html + main.js + šablony)
            - zabalí do JSZip → stažení
 ```
 
-### Klíčové URL
-| Služba | URL |
-|--------|-----|
-| GitHub Pages | `https://romansedlo.github.io/tanganica-banner-tool/` |
-| Cloudflare Worker | `https://creative-automation-tool.marketing-e01.workers.dev/` |
-| N8N (selfhosted) | interní instance Tanganicy |
-
 ### Modely
 Oba N8N workflow používají **Claude Sonnet 4.6** (`claude-sonnet-4-6`).
 
