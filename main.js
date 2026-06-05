@@ -1,5 +1,3 @@
-const _WEBHOOK_URL = "https://creative-automation-tool.marketing-e01.workers.dev/"
-
 const btnHeadlineImprove = document.getElementById("btn-headline-improve");
 const btnHeadlineGenerate = document.getElementById("btn-headline-generate");
 const btnCtaImprove = document.getElementById("btn-cta-improve");
@@ -47,17 +45,6 @@ async function generateBanners(translations, campaign, ad_type, size) {
   const templateRes = await fetch(templateUrl);
   const template = await templateRes.text();
 
-  const webinarLabels = {
-    cz: 'Webinář pro e-shopy', en: 'Webinar for e-shops', de: 'Webinar für Online-Shops',
-    it: 'Webinar per e-commerce', es: 'Webinar para e-commerce', fr: 'Webinaire pour e-commerce',
-    pl: 'Webinar dla e-sklepów', ro: 'Webinar pentru magazine online', hu: 'Webinár e-shopoknak',
-    pt: 'Webinar para e-commerce', nl: 'Webinar voor webshops',
-  };
-  const badgeLabels = {
-    cz: 'ZDARMA', en: 'FOR FREE', de: 'KOSTENLOS', it: 'GRATIS', es: 'GRATIS', fr: 'GRATUIT',
-    pl: 'ZA DARMO', ro: 'GRATUIT', hu: 'INGYENES', pt: 'GRÁTIS', nl: 'GRATIS',
-  };
-
   let imageDataUrl = null;
   if (size === "1080x1920") {
     const file = document.getElementById("banner_image").files[0];
@@ -76,8 +63,8 @@ async function generateBanners(translations, campaign, ad_type, size) {
       .replace("{{headline}}", texts.headline)
       .replace("{{subheadline}}", texts.subheadline || "")
       .replace("{{cta_text}}", texts.cta)
-      .replace("{{badge}}", badgeLabels[lang] || badgeLabels.en)
-      .replace("{{webinar_label}}", webinarLabels[lang] || webinarLabels.en)
+      .replace("{{badge}}", BADGE_LABELS[lang] || BADGE_LABELS.en)
+      .replace("{{webinar_label}}", WEBINAR_LABELS[lang] || WEBINAR_LABELS.en)
       .replaceAll(/src="[^"]*tanganica_logo\.svg[^"]*"/g, `src="${logos.tanganica}"`)
       .replaceAll(/src="[^"]*google_ads\.png[^"]*"/g, `src="${logos.google}"`)
       .replaceAll(/src="[^"]*meta\.png[^"]*"/g, `src="${logos.meta}"`)
@@ -135,7 +122,7 @@ async function callGenerateText(field, currentHeadline, currentCTA, targetInputI
   btn.querySelector(".btn-text").style.display = "none";
 
   try {
-    const res = await fetch(_WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -215,7 +202,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   bannerLoader.classList.add("active");
 
   try {
-    const res = await fetch(_WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -224,6 +211,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         cta_text: document.getElementById("button_text").value.trim(),
         campaign: document.getElementById("function").value,
         ad_type: document.getElementById("ad_type").value,
+        languages: LANGUAGES
       }),
     });
 
