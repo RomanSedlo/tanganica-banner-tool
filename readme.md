@@ -21,6 +21,31 @@ Nástroj pro generování reklamních bannerů ve všech 11 evropských trzích 
 
 ---
 
+## Jak přidat nový jazyk
+
+1. V `config.js` přidej jazyk do `LANGUAGES`, `WEBINAR_LABELS` a `BADGE_LABELS`:
+
+```js
+const LANGUAGES = {
+  // ... stávající jazyky
+  sk: "Slovak",
+};
+const WEBINAR_LABELS = {
+  // ... stávající
+  sk: "Webinár pre e-shopy",
+};
+const BADGE_LABELS = {
+  // ... stávající
+  sk: "ZADARMO",
+};
+```
+
+2. V N8N Workflow 2 — Claude translate node — přidej případné specifické pravidlo do "Additional translation rules" (volitelné, jen pokud má jazyk zvláštní gramatická pravidla jako němčina nebo maďarština)
+
+To je vše — `LANGUAGES` se automaticky přepošle do N8N, Claude přeloží do nového jazyka a `main.js` vygeneruje extra banner.
+
+---
+
 ## Architektura
 
 ```
@@ -62,6 +87,7 @@ Oba N8N workflow používají **Claude Sonnet 4.6** (`claude-sonnet-4-6`).
 ```
 ├── index.html                        # Formulář
 ├── style.css                         # Styling formuláře
+├── config.js                         # Konfigurace — webhook URL, jazyky, labely
 ├── main.js                           # Logika: AI volání, generování bannerů, ZIP
 ├── templates/
 │   ├── banner_template_1080h.html    # Šablona 1080×1080 (Feed)
@@ -159,7 +185,5 @@ Struktura banneru vždy: **Logo → Headline → Vizuální prvek → CTA button
 ## Možná budoucí rozšíření
 
 - **Video kreativy** — generování videí přes Veo/Google Vids API (v době tvorby nedostupná kvalita přes API)
-- **Config soubor** — centrální `config.js` pro jazyky, formáty a URL místo inline konstant
 - **Více formátů** — LinkedIn (1200×627), Google Display (728×90) atd.
-- **Canva API integrace** — přímý export do Canva draftů místo PNG
-- **Slack notifikace** — po vygenerování poslat ZIP link do Slack kanálu
+- **Kampaně bez předdefinovaného typu** — umožnit uživateli zadat vlastní popis kampaně bez výběru ze seznamu; vyžaduje úpravu promptů v N8N Workflow 1
